@@ -1,4 +1,10 @@
-<?php include 'template/head.php'; ?>
+<?php include 'template/head.php';
+
+
+
+ ?>
+
+
 	<body>
 		<section class="body">
 			<?php include 'template/header.php'; ?>

@@ -5018,6 +5018,7 @@
 				cache: false,
 				dataType: 'json',
 				success: function(data){
+					//console.log(data);
 					this_modal.find("#sent_email_id").val(id);
 					this_modal.find("#html_message").html(data.message);
 					this_modal.find("#email_subject").val(data.subject);

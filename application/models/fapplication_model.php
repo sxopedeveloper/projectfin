@@ -3782,6 +3782,37 @@ join `users` u on ft.fk_user = u.id_user where ft.id = {$id}; ";
     	return true;
     }
 
+    function pdf_refresh($id,$type)
+    {
+    	if($type == 'both'){
+
+	    	$filenm = 'PurchaseOrder_'.$id.'.pdf';
+	    	unlink("uploads/cq_requirements/".$filenm);
+	    	$select_query = "DELETE from requirement_uploads where file_name= '".$filenm."' and fk_account = '".$id."'";
+				$query = $this->db->query($select_query);
+
+			$filenm = 'Dealer_Purchase_Order'.$id.'.pdf';
+			unlink("uploads/cq_requirements/".$filenm);
+	    	$select_query = "DELETE from requirement_uploads where file_name= '".$filenm."' and fk_account = '".$id."'";
+				$query = $this->db->query($select_query);
+    	}
+    	if($type == 'client'){
+
+	    	$filenm = 'PurchaseOrder_'.$id.'.pdf';
+	    	unlink("uploads/cq_requirements/".$filenm);
+	    	$select_query = "DELETE from requirement_uploads where file_name= '".$filenm."' and fk_account = '".$id."'";
+				$query = $this->db->query($select_query);
+    	}
+    	if($type == 'dealer'){
+    		
+			$filenm = 'Dealer_Purchase_Order'.$id.'.pdf';
+			unlink("uploads/cq_requirements/".$filenm);
+	    	$select_query = "DELETE from requirement_uploads where file_name= '".$filenm."' and fk_account = '".$id."'";
+				$query = $this->db->query($select_query);
+    	}
+
+    }
+
     function get_lead_dealer_data($id_lead)
     {
     	$this->db->select('*');

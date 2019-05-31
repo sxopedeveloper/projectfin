@@ -18,15 +18,15 @@
 							<form action="<?php echo site_url('admin/update_profile'); ?>" method="post" accept-charset="utf-8">
 								<div class="row">
 									<div class="form-group">
-										<div class="col-md-12 text-left">
+										<div class="col-md-6 text-left">
 											<label>Name:</label>
 											<input value="<?php echo $admin['name']; ?>" class="form-control input-md" id="name" name="name" type="text" required><br />
 										</div>
-										<div class="col-md-12 text-left">
+										<div class="col-md-6 text-left">
 											<label>ABN:</label>
 											<input value="<?php echo $admin['abn']; ?>" class="form-control input-md" id="abn" name="abn" type="text" required><br />
 										</div>
-										<div class="col-md-12 text-left">
+										<div class="col-md-6 text-left">
 											<label>State:</label>
 											<?php 
 											$act = ''; if ($admin['state']=='ACT') { $act = ' selected'; }
@@ -50,21 +50,35 @@
 												<option name="state" value="WA" <?php echo $wa; ?>>WA - Western Australia</option>
 											</select><br />
 										</div>
-										<div class="col-md-12 text-left">
-											<label>Postcode:</label>
+										<div class="col-md-6 text-left">
+											<label>Postcode</label>
 											<input value="<?php echo $admin['postcode']; ?>" class="form-control input-md" id="postcode" name="postcode" type="text" required><br />
 										</div>
-										<div class="col-md-12 text-left">
-											<label>Address:</label>
+										<div class="col-md-6 text-left">
+											<label><i class="fa fa-map-marker">&nbsp;</i>Address</label>
 											<input value="<?php echo $admin['address']; ?>" class="form-control input-md" id="address" name="address" type="text" required><br />
 										</div>
-										<div class="col-md-12 text-left">
-											<label>Phone:</label>
+										<div class="col-md-6 text-left">
+											<label><i class="fa fa-building">&nbsp;</i>Office Number</label>
 											<input value="<?php echo $admin['phone']; ?>" class="form-control input-md" id="phone" name="phone" type="text" required><br />
 										</div>
-										<div class="col-md-12 text-left">
-											<label>Mobile:</label>
+
+										<div class="col-md-6 text-left">
+											<label><i class="fa fa-mobile">&nbsp;</i>Mobile Number</label>
 											<input value="<?php echo $admin['mobile']; ?>" class="form-control input-md" id="mobile" name="mobile" type="text" required><br />
+										</div>
+										<div class="col-md-6 text-left">
+											<label><i class="fa fa-phone">&nbsp;</i>Direct Number</label>
+											<input value="<?php echo $admin['direct']; ?>" class="form-control input-md" id="direct" name="direct" type="text" required><br />
+										</div>
+
+										<div class="col-md-6 text-left">
+											<label><i class="fa fa-envelope">&nbsp;</i>Email</label>
+											<input value="<?php echo $admin['email']; ?>" class="form-control input-md" id="email" name="email" type="text" required><br />
+										</div>
+										<div class="col-md-6 text-left">
+											<label><i class="fa fa-user">&nbsp;</i>Postname</label>
+											<input value="<?php echo $admin['postname']; ?>" class="form-control input-md" id="postname" name="postname" type="text" required><br />
 										</div>
 										<div class="col-md-12 text-left">
 											<label>Other Info:</label>

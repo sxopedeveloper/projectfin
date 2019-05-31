@@ -651,7 +651,7 @@
                     if (response === "success")
                     {
                         swal("SUCCESS", "", "success");
-                        location.reload(true);
+                        //location.reload(true);
                     }                       
                     else
                     {
@@ -680,7 +680,7 @@
                     if (response === "success")
                     {
                         swal("SUCCESS", "", "success");
-                        location.reload(true);
+                        //location.reload(true);
                     }                       
                     else
                     {

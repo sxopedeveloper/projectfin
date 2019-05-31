@@ -178,14 +178,18 @@ function load_suggested_dealers (container)
 {
     var make = $("#"+container).find("#make_ds").val();
     var state = $("#"+container).find("#state_ds").val();
+    var type = $("#"+container).find("#type_ds").val();
     var quote_request = $("#"+container).find("#id_quote_request").val();
     
     var data = {
         container: container,
         make: make,
         state: state,
+        type: type,
         // quote_request_id: quote_request
     };
+
+    //alert(type);
 
     if(container == 'add_dealers_modal') {
         data['quote_request_id'] = quote_request;

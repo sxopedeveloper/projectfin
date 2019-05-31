@@ -1070,7 +1070,8 @@ class Fapplication extends Admin_main
 		$postcode = null;
        /// $postcode = isset($input_arr['postcode']) ? $input_arr['postcode'] : null;
         $state = isset($input_arr['state']) ? $input_arr['state'] : null;
-		$suggested_dealers = $this->user_model->get_suggested_dealers($make, $postcode, $state, $quote_request_id);
+        $type = isset($input_arr['type']) ? $input_arr['type'] : null;
+		$suggested_dealers = $this->user_model->get_suggested_dealers($type,$make, $postcode, $state, $quote_request_id);
        	
 		if ($suggested_dealers->num_rows() > 0)
 		{
@@ -2018,6 +2019,7 @@ class Fapplication extends Admin_main
 		$delivery['deposite'] = $post['deposite'];
 
 		$res = $this->fapplication_model->delivery_details_for_computation($lead_id, $delivery);
+		//$aa = $this->fapplication_model->pdf_refresh($lead_id,'both');
 
 	
 		$computation = array(
@@ -2035,6 +2037,7 @@ class Fapplication extends Admin_main
 			'trade_valuation_sel'=> $post['trade_valuation_sel'],
 			'tradein_valuaton'=> $post['tradein_valuaton'],
 			'trade_payout'=> $post['trade_payout'],
+			'trade_changeover'=> $post['trade_changeover'],
 			'aftermarket_product'=> $post['aftermarket_product'],
 			'aftermarket_product_cost'=> $post['aftermarket_product_cost'],
 			'aftermarket_sale_price'=> $post['aftermarket_sale_price'],
@@ -2075,6 +2078,12 @@ class Fapplication extends Admin_main
 		echo json_encode($response);
 		/* For Account Table */
 		
+	}
+
+	public function delete_pdf_file($lid){
+
+		echo "string";
+		return true;
 	}
 	public function resend_vehicle_confirmation()
 	{
@@ -6251,7 +6260,7 @@ class Fapplication extends Admin_main
     public function get_system_email_template($modal_place='') 
 	{
 		$email_template_id = $this->input->post('id');
-		
+		$sig = $this->data;
         $data = $this->data;
 		$email_template = $this->fapplication_model->get_system_email_template($email_template_id);
 
@@ -6299,6 +6308,10 @@ class Fapplication extends Admin_main
 	        $content = str_replace("@@SUBMIT_URL@@",$link_url,$content);
 	        $content = str_replace("@@NOTE@@",$notes,$content);
 	        $content = str_replace("@@CAR_NAME@@",$car_name,$content);
+	        $content = str_replace("@@USER@@",$sig['name'],$content);
+			$content = str_replace("@@office@@",$sig['phone'],$content);
+			$content = str_replace("@@direct@@",$sig['direct'],$content);
+			$content = str_replace("@@mobile@@",$sig['mobile'],$content);
 	        $email_template_arr['content'] = $content;
 			echo json_encode($email_template_arr);
 		}
@@ -6337,6 +6350,10 @@ class Fapplication extends Admin_main
 	        $content = str_replace("@@SUBMIT_URL@@",$link_url,$content);
 	        $content = str_replace("@@NOTE@@",$notes,$content);
 			$content = str_replace("@@CAR_NAME@@",$car_name,$content);
+			$content = str_replace("@@USER@@",$sig['name'],$content);
+			$content = str_replace("@@office@@",$sig['phone'],$content);
+			$content = str_replace("@@direct@@",$sig['direct'],$content);
+			$content = str_replace("@@mobile@@",$sig['mobile'],$content);
 			$content = str_replace("@@CLIENT_POSTCODE@@",$fq_dealer_data['postcode'],$content);
 	        $email_template_arr['content'] = $content;
 			echo json_encode($email_template_arr);
@@ -6413,6 +6430,10 @@ class Fapplication extends Admin_main
             $content = str_replace("@@EMAIL_PARAGRAPH@@",$email_paragraph,$content);
             $content = str_replace("@@SUBMIT_URL@@",$link_url,$content);
             $content = str_replace("@@CAR_NAME@@",$car_name,$content);
+            $content = str_replace("@@USER@@",$sig['name'],$content);
+			$content = str_replace("@@office@@",$sig['phone'],$content);
+			$content = str_replace("@@direct@@",$sig['direct'],$content);
+			$content = str_replace("@@mobile@@",$sig['mobile'],$content);
             $email_template_arr['content'] = $content;
 			echo json_encode($email_template_arr);
 		}
@@ -6462,6 +6483,10 @@ class Fapplication extends Admin_main
             $content = str_replace("@@EMAIL_PARAGRAPH@@",$email_paragraph,$content);
             $content = str_replace("@@SUBMIT_URL@@",$link_url,$content);
             $content = str_replace("@@CAR_NAME@@",$car_name,$content);
+            $content = str_replace("@@USER@@",$sig['name'],$content);
+			$content = str_replace("@@office@@",$sig['phone'],$content);
+			$content = str_replace("@@direct@@",$sig['direct'],$content);
+			$content = str_replace("@@mobile@@",$sig['mobile'],$content);
             $email_template_arr['content'] = $content;
 			echo json_encode($email_template_arr);
 		}
@@ -6513,6 +6538,7 @@ class Fapplication extends Admin_main
 				$accessories = implode(', ', $accessories);
                 $lead_option = $accessories;
 			}
+			$sig = $this->data;
 			$content = $email_template_arr['content'];
 			$content = str_replace("@@FQ_LEAD_NUMBER@@",$cq_number,$content);
 			$content = str_replace("@@LEAD_NAME@@",trim($fq_dealer_data['name']),$content);
@@ -6522,6 +6548,10 @@ class Fapplication extends Admin_main
 			$content = str_replace("@@LEAD_REG_TYPE@@",$lead['registration_type'],$content);
 			$content = str_replace("@@REDBOOK@@",$car_desc,$content);
 			$content = str_replace("@@REDPRICE@@",$redprice,$content);
+			$content = str_replace("@@USER@@",$sig['name'],$content);
+			$content = str_replace("@@office@@",$sig['phone'],$content);
+			$content = str_replace("@@direct@@",$sig['direct'],$content);
+			$content = str_replace("@@mobile@@",$sig['mobile'],$content);
 			$linkurl = site_url("Process/confirmtender/'.$lead_id.'");
 			$content = str_replace("@@confirm_vehicle@@",$linkurl,$content);
 			$content = str_replace("@@POSTCODE@@",$fq_dealer_data['postcode'],$content);
@@ -6570,7 +6600,9 @@ class Fapplication extends Admin_main
 			$this->db->from('computation');
 			$this->db->where('lead_id', $lead_id);
 			$computataion_data = $this->db->get()->result_array();
-			
+
+			$sig = $this->data;
+		  	
 			$computation_data = $computataion_data[0];
 
 			if($computation_data['method_of_purchase'] == 'no_finance'){
@@ -6588,6 +6620,10 @@ class Fapplication extends Admin_main
 			$content = str_replace("@@Car_Name@@",$car_name,$content);
 			$content = str_replace("@@CQ_NUMBER@@",$lead['cq_number'],$content);
 			$content = str_replace("@@Client_First_Name@@",$client['name'],$content);
+			$content = str_replace("@@USER@@",$sig['name'],$content);
+			$content = str_replace("@@office@@",$sig['phone'],$content);
+			$content = str_replace("@@direct@@",$sig['direct'],$content);
+			$content = str_replace("@@mobile@@",$sig['mobile'],$content);
 			$content = str_replace("@@Dealer_Primary_Contact_First_Name@@",$fq_dealer_data['name'],$content);
 			$content = str_replace("@@Dealer_Primary_Contact_Surname_Name@@",$fq_dealer_data['surname'],$content);
 			$content = str_replace("@@First_Name_Of_Dealer_Contact@@",$to_name,$content);
@@ -6640,6 +6676,7 @@ class Fapplication extends Admin_main
 	            $to_name = $dealer_detail['name'];    
 			}
 			
+			$sig = $this->data;
 			$client = $this->fapplication_model->get_fq_dealer_data($lead_id);
 		
 			$data['type'] = $type;
@@ -6666,6 +6703,10 @@ class Fapplication extends Admin_main
 			$content = str_replace("@@Client_Surname@@",$client['surname'],$content);
 			$content = str_replace("@@Primary_Dealer_Contact_First_Name@@",$to_name,$content);
 			$content = str_replace("@@Method_Of_Payment@@",$method_of_purchase,$content);
+			$content = str_replace("@@USER@@",$sig['name'],$content);
+			$content = str_replace("@@office@@",$sig['phone'],$content);
+			$content = str_replace("@@direct@@",$sig['direct'],$content);
+			$content = str_replace("@@mobile@@",$sig['mobile'],$content);
 
 			$email_template_arr['content'] = $content;
 			$email_template_arr['subject'] = 'New Purchase Order  - '.$car_name.' - '.$client['name'].' '.$client['surname'];
@@ -7862,6 +7903,7 @@ class Fapplication extends Admin_main
 		$this->db->select('*');
 		$this->db->from('computation');
 		$this->db->where('lead_id', $id );
+
 		$computataion_data = $this->db->get()->result_array();
 
 		$data['computation_data'] = $computataion_data[0];
@@ -7907,6 +7949,7 @@ class Fapplication extends Admin_main
 		$pdfFilePath = "client_purchase_order.pdf";
 
 		if($type == 'client'){
+			$aa = $this->fapplication_model->pdf_refresh($id,$type);
 			$uid = $this->data['user_id'];
 			$filenm = 'PurchaseOrder_'.$id.'.pdf';
 			$select_query = "select * from requirement_uploads where file_name= '".$filenm."' and fk_account = '".$id."'";
@@ -7932,10 +7975,12 @@ class Fapplication extends Admin_main
 			
 		}
 		if($type == 'dealer'){
+			$aa = $this->fapplication_model->pdf_refresh($id,$type);
 			$uid = $this->data['user_id'];
 			$filenm = 'Dealer_Purchase_Order'.$id.'.pdf';
 			$select_query = "select * from requirement_uploads where file_name= '".$filenm."' and fk_account = '".$id."'";
 			$query = $this->db->query($select_query);
+
 
 			if($query->num_rows() ==  0){
 				$pdfFilePath = "uploads/cq_requirements/".$filenm;

@@ -68,7 +68,7 @@
 	         <ul>
 	            
 	            <?php foreach ($deal_requirements['warnings'] AS $deal_error): ?>
-	            <li><?=deal_warning;?></li>
+	            <li><?=$deal_warning;?></li>
 	            <?php endforeach; ?>
 	         </ul>
 	      </div>
@@ -272,6 +272,12 @@
                         </span>
                      </td>
                      <td><input value="<?php echo $computation_data['trade_payout'];?>" id="trade_payout" class="form-control input-sm input-tradein" name="trade_payout" type="text"></td>
+                  </tr>
+                   <tr>
+                     <td>
+                        Changeover
+                     </td>
+                     <td><input value="<?php echo $computation_data['trade_changeover'];?>" id="trade_changeover" class="form-control input-sm input-tradein" name="trade_changeover" type="text"></td>
                   </tr>
                </table>
             </div>

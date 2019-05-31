@@ -2675,7 +2675,7 @@ $(document).on('submit', '#add_trade_valuation_form', function (e) {
                 $(this).find("input[type=text],input[type=hidden]").val("");
 
                 swal("SUCCESS", "", "success");
-                location.reload(true);
+                //location.reload(true);
             } else {
                 swal("ERROR", "An error occurred! Please try again", "error");
             }
@@ -3077,6 +3077,7 @@ $(".select_winning_quote_button").click(function(e) { // Reload //
 $(".remove_winning_quote_button").click(function(e) { // Reload //
     var id_lead = $(this).data("id_lead");
     var id_quote_request = $(this).data("id_quote_request");
+            //console.log("response");
     
     var data = {
         id_lead: id_lead,
@@ -3088,7 +3089,6 @@ $(".remove_winning_quote_button").click(function(e) { // Reload //
         data: data,
         cache: false,
         success: function(response){
-            //console.log(response);
             var res = response.trim();
             if (res === "success") {
                 swal("SUCCESS", "", "success");

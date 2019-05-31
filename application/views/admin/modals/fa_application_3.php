@@ -3846,6 +3846,15 @@
                                                     <option value="WA">Western Australia</option>
                                                 </select>
                                             </div>
+                                             <div class="col-md-4">
+                                                <label class="control-label">User Type :</label>
+                                                <select class="form-control input-md" id="type_ds" type="text" onchange="load_suggested_dealers('add_trade_valuation_modal')">
+                                                    <option value="0">All</option>
+                                                    <option value="1">Dealer</option>
+                                                    <option value="3">Wholesaler</option>
+                                                    <option value="8">Other</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12 text-left" id="suggested_dealers"></div>
@@ -3873,6 +3882,7 @@
                                         </div>
                                         <br>
                                         <div class="row">                                            
+                                           
                                             <div class="col-md-4">
                                                 <label class="control-label">Valuation:</label>
                                                 <input class="form-control input-md" id="" name="trade_valuation" type="text" value="" placeholder="Trade Valuation" required><br />

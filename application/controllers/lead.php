@@ -2789,7 +2789,7 @@ class Lead extends Admin_main
 		
 		$input_arr = $this->input->post();		
 
-		$suggested_dealers = $this->user_model->get_suggested_dealers($input_arr['make'], $input_arr['postcode'], $input_arr['state'], $quote_request_id);
+		$suggested_dealers = $this->user_model->get_suggested_dealers($input_arr['type'],$input_arr['make'], $input_arr['postcode'], $input_arr['state'], $quote_request_id);
 		if ($suggested_dealers->num_rows() > 0)
 		{
 			$html = '
@@ -3514,7 +3514,7 @@ class Lead extends Admin_main
         $input_arr = $this->input->post();
 
         $lead = $this->lead_model->get_lead($input_arr['id_lead']);
-        // $quote = $this->quote_model->get_quote_all($input_arr['id_quote']);
+         //$quote = $this->quote_model->get_quote_all($input_arr['id_quote']);
 
         $remove_winner_result = $this->request_model->remove_winner($input_arr['id_quote_request']);
 

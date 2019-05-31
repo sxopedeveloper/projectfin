@@ -568,6 +568,8 @@ class User_Model extends CI_Model {
 		address = '".$this->db->escape_str($input_arr['address'])."',
 		phone = '".$this->db->escape_str($input_arr['phone'])."',
 		mobile = '".$this->db->escape_str($input_arr['mobile'])."',
+		direct = '".$this->db->escape_str($input_arr['direct'])."',
+		postname = '".$this->db->escape_str($input_arr['postname'])."',
 		description = '".$this->db->escape_str($input_arr['description'])."'
 		".$admin_type_update."
 		WHERE `id_user` = '".$user_id."'";
@@ -953,7 +955,7 @@ class User_Model extends CI_Model {
 		return $sql->result();
 	}
 	
-	public function get_suggested_dealers ($make, $postcode, $state, $quote_request_id) // DEALERS
+	public function get_suggested_dealers ($type,$make, $postcode, $state, $quote_request_id) // DEALERS
 	{
 		$post = $this->input->post();
 		
@@ -962,10 +964,14 @@ class User_Model extends CI_Model {
 		}
 
 		$where = "";
-		if ($make != "") { $where .= " AND da.dealership_brand LIKE '%".$make."%' "; }
-		//if ($postcode != "") { $where .= " AND u.postcode LIKE '%".$postcode."%' "; }
-		if ($state != "") { $where .= " AND u.state LIKE '%".$state."%' "; }
-		if ($quote_request_id <> 0) { $where .= " AND u.id_user NOT IN (SELECT fk_user FROM dealer_requests WHERE fk_quote_request = ".$quote_request_id.")"; }
+		if ($type != 0) { $where .= " AND u.type = ".$type." "; }
+		if($type == 0){
+
+			if ($make != "") { $where .= " AND da.dealership_brand LIKE '%".$make."%' "; }
+			//if ($postcode != "") { $where .= " AND u.postcode LIKE '%".$postcode."%' "; }
+			if ($state != "") { $where .= " AND u.state LIKE '%".$state."%' "; }
+			if ($quote_request_id <> 0) { $where .= " AND u.id_user NOT IN (SELECT fk_user FROM dealer_requests WHERE fk_quote_request = ".$quote_request_id.")"; }
+		}
 
 		$query = "
 		SELECT 
@@ -991,7 +997,6 @@ class User_Model extends CI_Model {
 		LEFT JOIN dealer_attributes da ON u.id_user = da.fk_user
 		LEFT JOIN dealer_requests dr ON u.id_user = dr.fk_user
 		WHERE 1
-		AND u.type = 1
 		AND u.deprecated <> 1
 		".$where."
 		GROUP BY u.id_user
