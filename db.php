@@ -1,6 +1,6 @@
 <?php 
 
-$con = mysqli_connect("localhost","","","");
+$con = mysqli_connect("localhost","root","","paul");
 
 // Check connection
 if (mysqli_connect_errno())
@@ -8,7 +8,7 @@ if (mysqli_connect_errno())
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
   }
 
-  	$sql = "SELECT * FROM rb_data_new";
+  	$sql = "SELECT * FROM rb_data_temp";
 	$result = $con->query($sql);
 	$counter = 0;
 	if ($result->num_rows > 0) {

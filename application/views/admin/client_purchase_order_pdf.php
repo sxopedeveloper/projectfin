@@ -225,6 +225,18 @@
                               <?php
                               }
                            }
+
+                           if($computation_data['trade_include'] == '1'){
+
+                              ?>
+                              <tr>
+                                 <td style="padding:4px; border-right:1px solid #969696; border-top: 1px solid #969696;">Include Trade Deposit - </td>
+                                 
+                                 <td style="padding:4px; width: 33.33%; border-right:1px solid #969696; border-top: 1px solid #969696; text-align: center;" ><?php $deposite = $client['deposite_amt']; if($deposite != ''){echo  '$'.number_format($deposite, 2, '.', ',');}?></td>
+                              </tr>
+
+                           <?php
+                        }
                           
                            ?>
                         </tbody>
